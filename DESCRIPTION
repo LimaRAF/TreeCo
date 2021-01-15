@@ -1,0 +1,23 @@
+Package: TreeCo
+Title: An R Package to Manage TreeCo Database
+Version: 0.0.1
+Type: Package
+Authors@R: 
+    person(given = "Renato A.",
+           family = "Ferreira de Lima",
+           role = c("aut", "cre"),
+           email = "raflima@usp.br")
+Author: 
+  Renato A. F. de Lima [aut, cre]
+Maintainer: Renato A. F. de Lima <raflima@usp.br>
+Description: The package TreeCo provides tools for 
+    loading, processing, and extracting data as stored
+    in the TreeCo database, including surveys metadata,
+    forest descriptions, local environmental conditions
+    and species trait information.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+URL: https://github.com/LimaRAF/TreeCo
+VignetteBuilder: knitr
+
