@@ -19,5 +19,11 @@ License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/LimaRAF/TreeCo
+Imports:
+    data.table,
+    knitr,
+    SDMTools,
+    utils
 VignetteBuilder: knitr
+RoxygenNote: 7.1.1.9000
 
