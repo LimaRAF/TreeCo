@@ -201,9 +201,14 @@ getCWM <- function(tree.data = NULL, trait.data = NULL, group = "ordem", spp.nam
   }
 
   ## CALCULATING CWM FOR EACH TRAIT AND EACH INVENTORY  ##
-  
-  CWM <- functcomp.treeco(tab_traits, tab_abund)
-  CWM.ab <- functcomp.treeco(tab_traits.ab, tab_basal)
+  CWM <- cbind.data.frame(rownames(tab_abund),
+                          functcomp.treeco(tab_traits, tab_abund),
+                          stringsAsFactors = FALSE)
+  colnames(CWM)[1] <- group 
+  CWM.ab <- cbind.data.frame(rownames(tab_basal),
+                             functcomp.treeco(tab_traits.ab, tab_basal),
+                             stringsAsFactors = FALSE)
+  colnames(CWM.ab)[1] <- group 
   
   if (treeco.cwm) {
     if ("wsg_gcm3" %in% trait.list) {
@@ -250,9 +255,16 @@ getCWM <- function(tree.data = NULL, trait.data = NULL, group = "ordem", spp.nam
   }
 
   ## Preparing to return ##  
-  if (ab.metric == "counts")
+  if (all(ab.metric == "counts"))
     result <- CWM
-  if (ab.metric == "biomass")
+  if (all(ab.metric == "biomass"))
     result <- CWM.ab
+  if ("counts" %in% ab.metric & "biomass" %in% ab.metric)
+    result <- merge(CWM, CWM.ab, 
+                    by = group, all = TRUE, sort = FALSE, suffixes = c(".N",".BA"))
+  
+  ## Re-ordering and returnig
+  group.lvls <- unique(tree.data$group.by) 
+  result <- result[match(result[, group], group.lvls),]
   return(result)
 }

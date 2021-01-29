@@ -14,6 +14,7 @@
 #' @param rm.flora should the records of (morpho)species not found within the
 #'   main sampling but found in the floristics or natural regeneration of the
 #'   same survey. Default to TRUE.
+#' @param trait.miss cutoff of number of missing traits    
 #' 
 #' @import data.table
 #' 
@@ -48,6 +49,7 @@
 #'   database with an abundance between zero and one. This records are excluded by
 #'   default, suing the argument `rm.flora`.
 #'   
+#'   
 #' @seealso \link[TreeCo]{indetSpecies}   
 #'   
 #' @author Renato A. F. de Lima
@@ -57,7 +59,7 @@
 traitCover <- function(tree.data = NULL, trait.data = NULL, group = "ordem", spp.name = "Name_submitted", 
                        trait.list = c("wsg_gcm3","MaxHeight_m","SeedMass_g","extinction","endemism",
                                       "LeafArea","LeafType","dispersal.syndrome","ecological.group"), 
-                       rm.flora = TRUE) {
+                       rm.flora = TRUE, trait.miss = 3) {
 
   ## Checking input
   if (is.null(tree.data) | is.null(trait.data))
@@ -77,7 +79,7 @@ traitCover <- function(tree.data = NULL, trait.data = NULL, group = "ordem", spp
   DT.traits <- data.table::as.data.table(trait.data[, c("spp.names", trait.list, "na.traits")])
   DT <- data.table::merge.data.table(DT.trees, DT.traits, by="spp.names", all.x = TRUE, sort = FALSE)
 
-  low.trait.taxa <- DT.traits[na.traits >= 3, .(spp.names, na.traits)]
+  low.trait.taxa <- DT.traits[na.traits >= trait.miss, .(spp.names, na.traits)]
   low.trait.taxa <- low.trait.taxa[grepl(" ", spp.names),]
   cat("Species with 3 or more missing traits (may hinder functional diversity analyses): \n",
       knitr::kable(low.trait.taxa, row.names = FALSE, col.names = c("Species", "NA.traits")),"", sep="\n")

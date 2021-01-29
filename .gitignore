@@ -25,7 +25,6 @@
 vignettes/*.html
 vignettes/*.pdf
 
-
 # knitr and R markdown default cache directories
 *_cache/
 /cache/
@@ -36,3 +35,4 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+.Rproj.user
