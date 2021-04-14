@@ -13,9 +13,6 @@
 #' @param CWM.sd should the weighted standard deviation of the numerical traits de
 #'   returned? Default to TRUE.
 #' 
-#' @importFrom SDMTools wt.sd
-#' @importFrom stats weighted.mean
-#' 
 #' @details This function uses most of the codes from `FD::functcomp()`, so the
 #'   help and details of this function should be consulted.
 #'   
@@ -105,9 +102,9 @@ functcomp.treeco <- function (x, a, CWM.type = "all", bin.num = NULL, CWM.sd = T
       vec.sd <- numeric(com)
       
       for (j in 1:com) {
-        vec[j] <- stats::weighted.mean(x[, i], a[, j], na.rm = TRUE)
+        vec[j] <- weighted.stats(x[, i], a[, j], na.rm = TRUE)
         na.ids <- !is.na(x[, i])
-        vec.sd[j] <- SDMTools::wt.sd(x[na.ids, i], a[na.ids, j])
+        vec.sd[j] <- weighted.stats(x[na.ids, i], a[na.ids, j], stats = "sd")
       }  
       temp[[i]] <- matrix(vec, com, 1, dimnames = list(com.names, tr.names[i]))
       temp.sd[[i]] <- matrix(vec.sd, com, 1, dimnames = list(com.names, tr.names[i]))

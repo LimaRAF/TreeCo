@@ -21,9 +21,9 @@ LazyData: true
 URL: https://github.com/LimaRAF/TreeCo
 Imports:
     data.table,
+    flora,
     knitr,
-    SDMTools,
     utils
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1.9000
+RoxygenNote: 7.1.1
 
