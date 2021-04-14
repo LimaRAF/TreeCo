@@ -66,6 +66,10 @@ indetSpecies <- function(tree.data = NULL, group = "ordem", spp.name = "species.
                      indets = c("unidentified","family","genus"), not.indets = c("species","variety","subspecies"),
                      rm.flora = TRUE) {
 
+  #Escaping R CMD check notes from using data.table syntax
+  tax.ranks <- group.by <- N <- S <- V1 <- NULL
+  spp.names <- S.ranks <- N.ranks <- S.identified <- N.identified <- NULL
+  
   ## Checking input
   if (is.null(tree.data))
     stop("Please provide the input species abundance data")

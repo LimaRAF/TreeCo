@@ -61,6 +61,10 @@ traitCover <- function(tree.data = NULL, trait.data = NULL, group = "ordem", spp
                                       "LeafArea","LeafType","dispersal.syndrome","ecological.group"), 
                        rm.flora = TRUE, trait.miss = 3) {
 
+  #Escaping R CMD check notes from using data.table syntax
+  spp.names <- group.by <- N <- S <- V1 <- NULL
+  S.traits <- N.traits <- na.traits <- . <- NULL
+  
   ## Checking input
   if (is.null(tree.data) | is.null(trait.data))
     stop("Please provide the input species abundance and/or trait data")
@@ -109,11 +113,11 @@ traitCover <- function(tree.data = NULL, trait.data = NULL, group = "ordem", spp
   
   ## Calculating the weighted average of the standardized classes of trait coverage (0 = all traits, 1 = all traits missing)
   tmp.DT[ , na.traits := na.traits / maximo]
-  wmean.N <- tmp.DT[, lapply(.SD, weighted.mean, w = N.traits), 
+  wmean.N <- tmp.DT[, lapply(.SD, weighted.stats, w = N.traits), 
                      by = group.by, .SDcols= c("na.traits")]
   data.table::setnames(wmean.N, c("na.traits"), c("miss.traits.N"))
   summ.DT <- data.table::merge.data.table(summ.DT, wmean.N, by="group.by", all.x = TRUE, sort = FALSE)
-  wmean.S <- tmp.DT[, lapply(.SD, weighted.mean, w = S.traits), 
+  wmean.S <- tmp.DT[, lapply(.SD, weighted.stats, w = S.traits), 
                     by = group.by, .SDcols= c("na.traits")]
   data.table::setnames(wmean.S, c("na.traits"), c("miss.traits.S"))
   summ.DT <- data.table::merge.data.table(summ.DT, wmean.S, by="group.by", all.x = TRUE, sort = FALSE)

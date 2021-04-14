@@ -11,7 +11,8 @@ traitCover(
   spp.name = "Name_submitted",
   trait.list = c("wsg_gcm3", "MaxHeight_m", "SeedMass_g", "extinction", "endemism",
     "LeafArea", "LeafType", "dispersal.syndrome", "ecological.group"),
-  rm.flora = TRUE
+  rm.flora = TRUE,
+  trait.miss = 3
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ the calculations.}
 \item{rm.flora}{should the records of (morpho)species not found within the
 main sampling but found in the floristics or natural regeneration of the
 same survey. Default to TRUE.}
+
+\item{trait.miss}{cutoff of number of missing traits}
 }
 \value{
 a data frame with number of individuals (N) and taxa (S) for the each

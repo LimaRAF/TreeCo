@@ -61,6 +61,9 @@ getCWM <- function(tree.data = NULL, trait.data = NULL, group = "ordem", spp.nam
                    indets = c("unidentified"), rm.flora = TRUE, treeco.cwm = TRUE, reduce.cats = TRUE,
                    habit = "habito", life.form = "life.form", ab.metric = "counts") {
   
+  #Escaping R CMD check notes from using data.table syntax
+  tax.ranks <- spp.names <- ..trait.list <- NULL
+  
   ## Checking input
   if (is.null(tree.data) | is.null(trait.data))
     stop("Please provide the input species abundance and/or trait data")
