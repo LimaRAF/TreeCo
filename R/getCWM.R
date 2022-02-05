@@ -55,11 +55,16 @@
 #'
 #' @export getCWM
 #' 
-getCWM <- function(tree.data = NULL, trait.data = NULL, group = "ordem", spp.name = "Name_submitted", tax.rank = "taxon.rank",
-                   trait.list = c("wsg_gcm3","MaxHeight_m","SeedMass_g","extinction","endemism",
-                                  "LeafArea","LeafType","dispersal.syndrome","succesional.group","ecological.group"),
-                   indets = c("unidentified"), rm.flora = TRUE, treeco.cwm = TRUE, reduce.cats = TRUE,
-                   habit = "habito", life.form = "life.form", ab.metric = "counts") {
+getCWM <- function(tree.data = NULL, trait.data = NULL, group = "ordem", 
+                   spp.name = "Name_submitted", tax.rank = "taxon.rank",
+                   trait.list = c("wsg_gcm3","MaxHeight_m","SeedMass_g",
+                                  "extinction","endemism",
+                                  "LeafArea","LeafType","dispersal.syndrome",
+                                  "succesional.group","ecological.group"),
+                   indets = c("unidentified"), rm.flora = TRUE, 
+                   treeco.cwm = TRUE, reduce.cats = TRUE,
+                   habit = "habito", life.form = "life.form", 
+                   ab.metric = "counts") {
   
   #Escaping R CMD check notes from using data.table syntax
   tax.ranks <- spp.names <- ..trait.list <- NULL
@@ -105,12 +110,14 @@ getCWM <- function(tree.data = NULL, trait.data = NULL, group = "ordem", spp.nam
     # Habits
     if (sum(as.numeric(trait.data[, habit]), na.rm = TRUE)>=1)
       trait.data$habits <- 
-        as.character(factor(trait.data[, habit], levels = c("1","0.5","0","1?","0.5?","check"),
-                            labels=c("tree","shrub","others","tree","shrub","tree")))
+        as.character(factor(trait.data[, habit], 
+                            levels = c("1","0.5","0","1?","0.5?","check"),
+                            labels = c("tree","shrub","others","tree","shrub","tree")))
     # Life forms
     trait.data$life.forms <- 
-      as.character(factor(trait.data[, life.form], levels = c("woody_tree","woody_vines_and_subshrubs","palm","tree_fern","succulent_tree","palmoids"),
-                          labels=c("woody","non_woody","non_woody","fern","non_woody","non_woody")))
+      as.character(factor(trait.data[, life.form], 
+                          levels = c("woody_tree","woody_vines_and_subshrubs","palm","tree_fern","succulent_tree","palmoids"),
+                          labels = c("woody","non_woody","non_woody","fern","non_woody","non_woody")))
     # Dispersal syndromes
     if(any("dispersal.syndrome" %in% trait.list)) {
       trait.data[,"dispersal.syndrome"] <- 

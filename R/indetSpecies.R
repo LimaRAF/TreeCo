@@ -18,7 +18,7 @@
 #'   'subspecies'.
 #' @param rm.flora should the records of (morpho)species not found within the
 #'   main sampling but found in the floristics or natural regeneration of the
-#'   same survey. Default to TRUE.
+#'   same survey be included? Default to TRUE.
 #' 
 #' @import data.table
 #' @importFrom utils tail

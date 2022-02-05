@@ -36,7 +36,7 @@ Default to the TreeCo column 'taxon.rank'.}
 
 \item{rm.flora}{should the records of (morpho)species not found within the
 main sampling but found in the floristics or natural regeneration of the
-same survey. Default to TRUE.}
+same survey be included? Default to TRUE.}
 }
 \value{
 a data frame with number of individuals (N) and of taxa (S) for the each group and
