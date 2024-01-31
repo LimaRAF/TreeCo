@@ -8,7 +8,8 @@ refInfo(
   ref.data = NULL,
   ref.name = "Reference",
   ref.id = "refID",
-  ref.type = NULL
+  ref.type = NULL,
+  default.ref.type = "article"
 )
 }
 \arguments{
@@ -21,16 +22,19 @@ the TreeCo column 'Reference'.}
 the TreeCo column 'refID'.}
 
 \item{ref.type}{a vector containing the type of reference (i.e. journal
-article, book, book chapter, monography). If not provide, it assumes that
-all (missing) references are journal articles.}
+article, book, book chapter, monography).}
+
+\item{default.ref.type}{a character containing the default type of reference
+to be assumed when the reference type is missing or when it does not match 
+one of the `ref.type` classes. Defaults to 'article'.}
 }
 \value{
 a data frame with number with the reference information in each
   column.
 }
 \description{
-Function the compile different information (e.g. authors, year 
-of publication) from a reference in the standard TreeCo format
+Function to parse different reference information (e.g. authors,
+  year of publication) from a reference string in the standard TreeCo format
 }
 \details{
 The standard TreeCo format for the references is the following:
@@ -41,7 +45,7 @@ by spaces in English, Portuguese, Spanish, German or Latin (i.e. ' and ',
 ' e ' ', ' y ', ' und ', ' et ').
 }
 \seealso{
-\link[TreeCo]{}
+\link[TreeCo]{refString}
 }
 \author{
 Renato A. F. de Lima

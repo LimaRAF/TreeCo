@@ -32,7 +32,7 @@
 #' @param reduce.cats should the categories of dispersal and ecological groups
 #' be simplified previous to the analysis? Default to TRUE.
 #' 
-#' @import data.table
+#' @importFrom data.table as.data.table merge.data.table setorder
 #' @importFrom stats xtabs
 #' 
 #' @return a data frame with the CWMs for each trait X group combination.
@@ -52,6 +52,7 @@
 #' autochoric) and zoochoric; hydrochory is disregarded
 #' 
 #' @author Renato A. F. de Lima
+#' 
 #'
 #' @export getCWM
 #' 

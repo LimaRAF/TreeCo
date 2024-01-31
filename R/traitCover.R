@@ -4,7 +4,8 @@
 #' have any information available for selected species traits.
 #'
 #' @param tree.data the data frame with tree abundance data in the TreeCo format
-#' @param trait.data the data frame with species trait data in the TreeCo format
+#' @param trait.data the data frame with edited and averaged trait data in the
+#'   TreeCo format
 #' @param group vector with the the column that should be used to aggregate the
 #'   data. Default to 'ordem'.
 #' @param spp.name the name of the columns containing the (morpho)species names.
@@ -16,7 +17,8 @@
 #'   same survey. Default to TRUE.
 #' @param trait.miss cutoff of number of missing traits    
 #' 
-#' @import data.table
+#' @importFrom data.table as.data.table merge.data.table setnames setkey CJ := .EACHI
+#' @importFrom knitr kable
 #' 
 #' @return a data frame with number of individuals (N) and taxa (S) for the each
 #'   group and the percentage of N and S with all selected traits (columns
@@ -47,7 +49,7 @@
 #'   an abundance value equal to zero. Similarly, if a species is present in the
 #'   natural regeneration but not in the adult component, the species enters the
 #'   database with an abundance between zero and one. This records are excluded by
-#'   default, suing the argument `rm.flora`.
+#'   default, using the argument `rm.flora`.
 #'   
 #'   
 #' @seealso \link[TreeCo]{indetSpecies}   
@@ -56,10 +58,18 @@
 #'
 #' @export traitCover
 #' 
-traitCover <- function(tree.data = NULL, trait.data = NULL, group = "ordem", spp.name = "Name_submitted", 
-                       trait.list = c("wsg_gcm3","MaxHeight_m","SeedMass_g","extinction","endemism",
-                                      "LeafArea","LeafType","dispersal.syndrome","ecological.group"), 
-                       rm.flora = TRUE, trait.miss = 3) {
+traitCover <- function(tree.data = NULL, 
+                       trait.data = NULL, 
+                       group = "ordem", 
+                       spp.name = "Name_submitted", 
+                       trait.list = c("wsg_gcm3","MaxHeight_m",
+                                      "SeedMass_g",
+                                      "extinction","endemism",
+                                      "LeafArea","LeafType",
+                                      "dispersal.syndrome",
+                                      "ecological.group"), 
+                       rm.flora = TRUE, 
+                       trait.miss = 3) {
 
   #Escaping R CMD check notes from using data.table syntax
   spp.names <- group.by <- N <- S <- V1 <- NULL

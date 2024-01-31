@@ -28,9 +28,9 @@ library("TreeCo")
 
 ## Note
 
-The package is being slowly constructed, with most 
-functions still pending to be included in the package
-and documented. 
+The package is being slowly constructed, with many 
+functions pending to be included in the package
+and properly documented. 
 
 
 <!-- ## Example -->
@@ -63,7 +63,7 @@ Renato A. F. de Lima
 
 ## Citation
 
-Lima, R.A.F (2021) *TreeCo*: An R Package to Manage TreeCo Database. R package version 0.0.1.
+Lima, R.A.F (2024) *TreeCo*: An R Package to Manage TreeCo Database. R package version 0.0.2.
 
 ## Funding
 

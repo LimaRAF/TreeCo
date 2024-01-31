@@ -9,15 +9,17 @@ functcomp.treeco(x, a, CWM.type = "all", bin.num = NULL, CWM.sd = TRUE)
 \arguments{
 \item{x}{matrix or data frame containing the functional traits.}
 
-\item{a}{matrix or data frame containing the abundances of the taxa listed in x.}
+\item{a}{matrix or data frame containing the abundances of the taxa
+listed in x.}
 
-\item{CWM.type}{character string indicating how nominal, binary and ordinal
-traits should be handled. Default to "all".}
+\item{CWM.type}{character string indicating how nominal, binary and
+ordinal traits should be handled. Default to "all".}
 
-\item{bin.num}{vector indicating binary traits to be treated as continuous.}
+\item{bin.num}{vector indicating binary traits to be treated as
+continuous.}
 
-\item{CWM.sd}{should the weighted standard deviation of the numerical traits de
-returned? Default to TRUE.}
+\item{CWM.sd}{should the weighted standard deviation of the
+numerical traits de returned? Default to TRUE.}
 }
 \description{
 This function is adapted from the function `functcomp()` from
@@ -26,8 +28,9 @@ This function is adapted from the function `functcomp()` from
   functional composition of communities.
 }
 \details{
-This function uses most of the codes from `FD::functcomp()`, so the
-  help and details of this function should be consulted.
+This function uses most of the codes from
+  `FD::functcomp()`, so the help and details of this function
+  should be consulted.
   
   The main differences of `functcomp.treeco()` from `FD::functcomp()` are:
    -- FINALIZAR --

@@ -6,15 +6,18 @@
 #'   functional composition of communities.
 #'
 #' @param x matrix or data frame containing the functional traits.
-#' @param a matrix or data frame containing the abundances of the taxa listed in x.
-#' @param CWM.type character string indicating how nominal, binary and ordinal
-#'   traits should be handled. Default to "all".
-#' @param bin.num vector indicating binary traits to be treated as continuous.
-#' @param CWM.sd should the weighted standard deviation of the numerical traits de
-#'   returned? Default to TRUE.
+#' @param a matrix or data frame containing the abundances of the taxa
+#'   listed in x.
+#' @param CWM.type character string indicating how nominal, binary and
+#'   ordinal traits should be handled. Default to "all".
+#' @param bin.num vector indicating binary traits to be treated as
+#'   continuous.
+#' @param CWM.sd should the weighted standard deviation of the
+#'   numerical traits de returned? Default to TRUE.
 #' 
-#' @details This function uses most of the codes from `FD::functcomp()`, so the
-#'   help and details of this function should be consulted.
+#' @details This function uses most of the codes from
+#'   `FD::functcomp()`, so the help and details of this function
+#'   should be consulted.
 #'   
 #'   The main differences of `functcomp.treeco()` from `FD::functcomp()` are:
 #'    -- FINALIZAR --

@@ -1,12 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # TreeCo
 
 An R Package to Manage TreeCo Database
 
 ## Installation
 
-You can install the released version of TreeCo from [GitHub](https://github.com/) with:
+You can install the released version of TreeCo from
+[GitHub](https://github.com/) with:
 
 ``` r
 library("remotes")
@@ -16,7 +18,8 @@ library("TreeCo")
 
 ## Note
 
-The package is being slowly constructed, with most functions still pending to be included in the package and documented.
+The package is being slowly constructed, with many functions pending to
+be included in the package and properly documented.
 
 <!-- ## Example -->
 <!-- This is a basic example which shows you how to solve a common problem: -->
@@ -33,17 +36,23 @@ The package is being slowly constructed, with most functions still pending to be
 <!-- plot(pressure) -->
 <!-- ``` -->
 <!-- In that case, don't forget to commit and push the resulting figure files, so they display on GitHub! -->
+
 ## Authors
 
 Renato A. F. de Lima
 
 ## Citation
 
-Lima, R.A.F (2021) *TreeCo*: An R Package to Manage TreeCo Database. R package version 0.0.1.
+Lima, R.A.F (2024) *TreeCo*: An R Package to Manage TreeCo Database. R
+package version 0.0.2.
 
 ## Funding
 
-The function included in this package started to be develop under the funding provided by the São Paulo Research Foundation (FAPESP) grant 2013/08722-5 and by the European Union’s Horizon 2020 research and innovation program under the Marie Skłodowska-Curie grant agreement No 795114.
+The function included in this package started to be develop under the
+funding provided by the São Paulo Research Foundation (FAPESP) grant
+2013/08722-5 and by the European Union’s Horizon 2020 research and
+innovation program under the Marie Skłodowska-Curie grant agreement No
+795114.
 
 <!-- ## Acknowledgements -->
 <!-- Marcela Pyles for her codes to obtain functional diversity -->

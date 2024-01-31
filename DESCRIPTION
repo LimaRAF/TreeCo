@@ -1,6 +1,6 @@
 Package: TreeCo
 Title: An R Package to Manage TreeCo Database
-Version: 0.0.1
+Version: 0.0.2
 Type: Package
 Authors@R: 
     person(given = "Renato A.",
@@ -21,8 +21,12 @@ LazyData: true
 URL: https://github.com/LimaRAF/TreeCo
 Imports:
     data.table,
+    dplyr,
     flora,
     knitr,
-    utils
+    plantR,
+    utils,
+    MASS,
+    stats
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.1

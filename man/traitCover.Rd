@@ -18,7 +18,8 @@ traitCover(
 \arguments{
 \item{tree.data}{the data frame with tree abundance data in the TreeCo format}
 
-\item{trait.data}{the data frame with species trait data in the TreeCo format}
+\item{trait.data}{the data frame with edited and averaged trait data in the
+TreeCo format}
 
 \item{group}{vector with the the column that should be used to aggregate the
 data. Default to 'ordem'.}
@@ -70,7 +71,7 @@ For each selected group, the function calculates the percentage of
   an abundance value equal to zero. Similarly, if a species is present in the
   natural regeneration but not in the adult component, the species enters the
   database with an abundance between zero and one. This records are excluded by
-  default, suing the argument `rm.flora`.
+  default, using the argument `rm.flora`.
 }
 \seealso{
 \link[TreeCo]{indetSpecies}

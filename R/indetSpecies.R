@@ -20,7 +20,7 @@
 #'   main sampling but found in the floristics or natural regeneration of the
 #'   same survey be included? Default to TRUE.
 #' 
-#' @import data.table
+#' @importFrom data.table as.data.table merge.data.table setkey setnames uniqueN CJ .N .EACHI
 #' @importFrom utils tail
 #' 
 #' @return a data frame with number of individuals (N) and of taxa (S) for the each group and
