@@ -54,7 +54,21 @@ aggregateAbundances <- function(tree.data = NULL,
   if (!spp.group %in% colnames(tree.data) | 
       !site.group %in% colnames(tree.data))
     stop("Columns with the species and groups not found")
+
+  if (any(!cols.to.sum %in% colnames(tree.data))) {
+    miss.cols <- cols.to.sum[!cols.to.sum %in% colnames(tree.data)]
+    cols.to.sum <- cols.to.sum[!cols.to.sum %in% miss.cols]
+    warning("Some columns to sum were not found in the input data frame: ", 
+            paste(miss.cols, collapse = ", "), call. = FALSE)
+  }
   
+  if (any(!cols.to.paste %in% colnames(tree.data))) {
+    miss.cols <- cols.to.paste[!cols.to.paste %in% colnames(tree.data)]
+    cols.to.paste <- cols.to.paste[!cols.to.paste %in% miss.cols]
+    warning("Some columns to paste were not found in the input data frame: ", 
+            paste(miss.cols, collapse = ", "), call. = FALSE)
+  }
+    
   ## Obtaining the total sums and unique characters per species per inventory
   DT <- data.table::data.table(tree.data)
   data.table::setnames(DT, spp.group, "spp.group.by")
