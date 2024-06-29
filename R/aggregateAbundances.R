@@ -88,7 +88,7 @@ aggregateAbundances <- function(tree.data = NULL,
   
   cols.to.paste1 <- cols.to.paste[cols.to.paste %in% names(DT)]
   squish <- function (x) {
-    x <- gsub("\\s\\s+", " ", as.character(x), perl = TRUE)
+    x <- gsub("\\s\\s+", " ", x, perl = TRUE)
     gsub("^ | $", "", x, perl = TRUE)
   }
   DT[ , (cols.to.paste1) := lapply(.SD, squish), .SDcols = cols.to.paste1]

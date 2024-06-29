@@ -3,7 +3,6 @@
 export(aggregateAbundances)
 export(functcomp.treeco)
 export(getCWM)
-export(getTraits)
 export(indetSpecies)
 export(prepAbundances)
 export(prepTraits)
