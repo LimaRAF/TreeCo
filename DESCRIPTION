@@ -13,8 +13,8 @@ Maintainer: Renato A. F. de Lima <raflima@usp.br>
 Description: The package TreeCo provides tools for 
     loading, processing, and extracting data as stored
     in the TreeCo database, including surveys metadata,
-    forest descriptions, local environmental conditions
-    and species trait information.
+    forest descriptions, local environmental conditions,
+    species trait information and references.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -26,6 +26,7 @@ Imports:
     knitr,
     plantR,
     utils,
+    stringdist,
     MASS,
     stats
 VignetteBuilder: knitr

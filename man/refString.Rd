@@ -24,15 +24,20 @@ to be assumed when the reference type is missing. Defaults to 'article'.}
 FALSE}
 }
 \value{
-the data frame \code{ref.data} with the standard reference string.
+the data frame \code{ref.data} with and extra column
+  containing the reference string in the standard TreeCo format.
 }
 \description{
 Function to build the standard TreeCo reference string based on
 reference information (i.e. metadata)
 }
 \details{
-The standard TreeCo format for the references is the following:
-AUTHORS(s). Year. Title. Publication name volume (issue): start page-end page.
+The standard TreeCo format for the references is adapted
+  from the Chicago citation style. The general format for an
+  article is:
+ 
+  \item{AUTHORS(s). Year. Title. Publication name volume (issue): start page-end page.}
+
 The separation between multiple authors is done using semi-colons.
 }
 \seealso{

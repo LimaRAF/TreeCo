@@ -3,18 +3,27 @@
 #' @description To be included
 #'
 #' @param tree.data a data frame with the species names
-#' @param spp.name character. The name of the column containing the species
-#'   names. Defaults to "Name_submitted"
-#' @param trait.cons a data frame with the extra, consensual species information
-#' @param trait.sp data frame with the species trait information averaged by species
-#' @param trait.gen data frame with the species trait information averaged by genus
-#' @param trait.fam data frame with the species trait information averaged by family
-#' @param generaliza a list containing the vectors of traits which can be
-#'   generalized at genera and family levels, respectively. Defaults to
-#'   list(c("wsg_gcm3","LeafType","SeedMass_g"),c("wsg_gcm3"))
-#' @param add.spp data frame with species to be added to the trait retrieval
-#' @param rm.colunas vector of extra columns names that will be removed from the original dataframe. Default is NULL but a vector is provided  with the most commonly removed columns
-#' @param inc.colunas vector of columns names that should be included contained in the vector of often-excluded columns. Default is NULL (i.e. keep the vector of often-excluded columns the same)
+#' @param spp.name character. The name of the column containing the
+#'   species names. Defaults to "Name_submitted"
+#' @param trait.cons a data frame with the extra, consensual species
+#'   information
+#' @param trait.sp data frame with the species trait information
+#'   averaged by species
+#' @param trait.gen data frame with the species trait information
+#'   averaged by genus
+#' @param trait.fam data frame with the species trait information
+#'   averaged by family
+#' @param generaliza a list containing the vectors of traits which can
+#'   be generalized at genera and family levels, respectively.
+#'   Defaults to list(c("wsg_gcm3","LeafType","SeedMass_g"),c("wsg_gcm3"))
+#' @param add.spp data frame with species to be added to the trait
+#'   retrieval
+#' @param rm.colunas vector of extra columns names that will be
+#'   removed from the original dataframe. Default is NULL but a vector
+#'   is provided  with the most commonly removed columns
+#' @param inc.colunas vector of columns names that should be included
+#'   contained in the vector of often-excluded columns. Default is
+#'   NULL (i.e. keep the vector of often-excluded columns the same)
 
 #' @return To be described 
 #'

@@ -20,26 +20,35 @@ getTraits(
 \arguments{
 \item{tree.data}{a data frame with the species names}
 
-\item{spp.name}{character. The name of the column containing the species
-names. Defaults to "Name_submitted"}
+\item{spp.name}{character. The name of the column containing the
+species names. Defaults to "Name_submitted"}
 
-\item{trait.cons}{a data frame with the extra, consensual species information}
+\item{trait.cons}{a data frame with the extra, consensual species
+information}
 
-\item{trait.sp}{data frame with the species trait information averaged by species}
+\item{trait.sp}{data frame with the species trait information
+averaged by species}
 
-\item{trait.gen}{data frame with the species trait information averaged by genus}
+\item{trait.gen}{data frame with the species trait information
+averaged by genus}
 
-\item{trait.fam}{data frame with the species trait information averaged by family}
+\item{trait.fam}{data frame with the species trait information
+averaged by family}
 
-\item{generaliza}{a list containing the vectors of traits which can be
-generalized at genera and family levels, respectively. Defaults to
-list(c("wsg_gcm3","LeafType","SeedMass_g"),c("wsg_gcm3"))}
+\item{generaliza}{a list containing the vectors of traits which can
+be generalized at genera and family levels, respectively.
+Defaults to list(c("wsg_gcm3","LeafType","SeedMass_g"),c("wsg_gcm3"))}
 
-\item{add.spp}{data frame with species to be added to the trait retrieval}
+\item{add.spp}{data frame with species to be added to the trait
+retrieval}
 
-\item{rm.colunas}{vector of extra columns names that will be removed from the original dataframe. Default is NULL but a vector is provided  with the most commonly removed columns}
+\item{rm.colunas}{vector of extra columns names that will be
+removed from the original dataframe. Default is NULL but a vector
+is provided  with the most commonly removed columns}
 
-\item{inc.colunas}{vector of columns names that should be included contained in the vector of often-excluded columns. Default is NULL (i.e. keep the vector of often-excluded columns the same)}
+\item{inc.colunas}{vector of columns names that should be included
+contained in the vector of often-excluded columns. Default is
+NULL (i.e. keep the vector of often-excluded columns the same)}
 }
 \value{
 To be described
