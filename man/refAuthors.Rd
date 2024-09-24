@@ -9,6 +9,7 @@ refAuthors(
   ref.data = NULL,
   ids.coluna = "refID",
   auth.coluna = "author",
+  adv.coluna = "advisor",
   fuzzy = FALSE,
   max.dist = 0.025
 )
@@ -23,6 +24,10 @@ TreeCo refIDs. Defaults to 'refID'.}
 
 \item{auth.coluna}{the name of the column in 'ref.data' containing the
 author names. Defaults to 'author'.}
+
+\item{adv.coluna}{the name of the column in 'ref.data' containing
+the advisor name in the case of thesis and dissertations.
+Defaults to 'advisor'.}
 
 \item{fuzzy}{logical. Should authors with different but close
 spelling be put together (may take time for large lists of

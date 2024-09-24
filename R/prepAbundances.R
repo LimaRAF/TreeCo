@@ -107,7 +107,7 @@ prepAbundances <- function(tree.data = NULL,
       
       ids1 <- length(unique(result[, coluna.alvo]))
       nota <- paste0(ids0 - ids1,
-                     " sites or plots were removed from the original data.")
+                     " sites or plots were removed from the initial TreeCo dataset.")
       if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
       
     } else {
@@ -117,7 +117,7 @@ prepAbundances <- function(tree.data = NULL,
       
       ids1 <- length(unique(result[, coluna.alvo]))
       nota <- paste0(ids0 - ids1,
-                     " sites or plots were removed from the original data.")
+                     " sites or plots were removed from the initial TreeCo dataset.")
       if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
       
     }    
@@ -168,9 +168,17 @@ prepAbundances <- function(tree.data = NULL,
     keepN <- !is.na(result[, N.name]) & result[, N.name] >= minN
     keepAB <- !is.na(result[, AB.name]) & result[, AB.name] > 0 
     keep_these <- keepN | keepAB
-    result <- result[keep_these, ]
-    # nota <- ""
-    # if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
+    
+    if (any(!keep_these)) {
+      result <- result[keep_these, ]
+
+      nota <- paste0(sum(!keep_these),
+                     " species records smaller than 'minN' were removed from the original data.")
+      if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
+    } else {
+      nota <- "No record smaller than 'minN' was found in the original data."
+      if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
+    }
   }
   
   #### FILTERING SPECIFIC GROUPS OF RECORDS ------------------------------
@@ -178,7 +186,9 @@ prepAbundances <- function(tree.data = NULL,
   if (rm.dead) {
     remove_these <- !result[ , wrk.tax.rank] %in% c("dead")
     result <- result[remove_these, ]
-    nota <- "Dead individuals removed from the data"
+    nota <- paste0(sum(!remove_these),
+                   " records of dead individuals removed from the data.")
+    # nota <- "Dead individuals removed from the data"
     if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
   }
   
@@ -191,7 +201,11 @@ prepAbundances <- function(tree.data = NULL,
     remove_these <- !grepl(patt, result[, obs.name], 
                            perl = TRUE, ignore.case = TRUE)
     result <- result[remove_these,]
-    nota <- paste0("Records from species of the following groups were removed: ",
+    
+    # nota <- paste0(sum(!remove_these),
+    #                " records of dead individuals removed from the data.")
+    nota <- paste0(sum(!remove_these),
+                   " records from species of the following groups were removed: ",
                    paste0(rm.tax, collapse = ", "), ".")
     if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
   }
@@ -202,8 +216,11 @@ prepAbundances <- function(tree.data = NULL,
     for (i in seq_along(wrk.spp.name))
       result[, wrk.spp.name[i]] <- 
         gsub(" cf\\. ", " ", result[, wrk.spp.name[i]], perl = TRUE)
-    # nota <- ""
-    # if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
+    nota <- "The 'cf.' modificator was removed from the species name."
+    if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
+  } else {
+    nota <- "The 'cf.' modificator was not removed from the species name."
+    if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
   }
   
   if (rm.infra) {
@@ -214,9 +231,12 @@ prepAbundances <- function(tree.data = NULL,
     
     result[ , wrk.tax.rank][result[ , wrk.tax.rank] %in% 
                               c("variety", "subspecies", "forma")] <- "species"
-    # nota <- ""
-    # if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
-  }  
+    nota <- "Original names at the infraespecific level were converted to the species level."
+    if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
+  } else {
+    nota <- "Original names at the specific and infraespecific levels are both considered."
+    if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
+  } 
   
   
   ## Replacing problematic/unresolved ids in TreeCo for the possible synonyms
@@ -242,16 +262,22 @@ prepAbundances <- function(tree.data = NULL,
     #trees$Name_submitted[trees$Name_submitted=="Cybianthus peruvianus"] = "Cybianthus brasiliensis"
     #trees$Name_submitted[trees$Name_submitted=="Lafoensia glyptocarpa"] = "Lafoensia pacari"
     
-    # nota <- ""
-    # if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
+    nota <- "Some problematic/unresolved names were replaced by the most probable synonyms."
+    if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
   }
   
   ## Removing specific species 
   if (!is.null(rm.spp)) {
+    dim.res <- dim(result)
+      
     for (i in seq_along(wrk.spp.name))
       result <- result[!result[, wrk.spp.name[i]] %in% rm.spp, ]
-    # nota <- ""
-    # if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
+    
+    dim.res1 <- dim(result)
+    nota <- paste0(dim.res[1] - dim.res1[1],
+                   " records of species listed in 'rm.spp' were removed from the data.")
+    
+    if (is.null(notas)) notas <- nota else notas <- c(notas, nota)
   } 
   
   ## Removing the sites with additional data for different size cutoffs DAP>3.2cm, DAS>3.2, etc.
@@ -262,7 +288,6 @@ prepAbundances <- function(tree.data = NULL,
   }    
   
   ## Re-ordering, cleaning and returning
-  
   for (i in seq_along(wrk.spp.name)) {
     working <- wrk.spp.name[i]
     original <- gsub(sufixo, "", working)

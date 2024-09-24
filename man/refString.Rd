@@ -33,16 +33,16 @@ reference information (i.e. metadata)
 }
 \details{
 The standard TreeCo format for the references is adapted
-  from the Chicago citation style. The general format for an
-  article is:
+  from the Chicago citation style. Currently, this is the only
+  citation format available. The general format for an article is:
  
-  \item{AUTHORS(s). Year. Title. Publication name volume (issue): start page-end page.}
+  AUTHORS(s). Year. Title. Publication name volume (issue): start page-end page.
 
-The separation between multiple authors is done using semi-colons.
+  The separation between multiple authors is done using semi-colons.
 }
 \seealso{
 \link[TreeCo]{refInfo}
 }
 \author{
-Renato A. F. de Lima
+Renato A. Ferreira de Lima
 }
