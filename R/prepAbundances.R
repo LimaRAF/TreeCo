@@ -75,7 +75,7 @@ prepAbundances <- function(tree.data = NULL,
   ## Creating the object to record the decisions take at each step
   notas <- NULL
   
-  if (!is.null(linhas)) { # sites or plots
+  if (!is.null(linhas)) { # sites or plots?
     
     hits.sites <- sum(unique(result[, wrk.site.name]) %in% linhas, na.rm = TRUE)
     hits.plots <- sum(unique(result[, wrk.id.name]) %in% linhas, na.rm = TRUE)
@@ -89,21 +89,30 @@ prepAbundances <- function(tree.data = NULL,
     if (hits.sites == hits.plots)
       coluna.alvo <- wrk.id.name
     
-    if (any(grepl("\\|", result[, coluna.alvo], perl = TRUE))) {
+    check_these <- grepl("\\|", result[, coluna.alvo], perl = TRUE)
+    if (any(check_these)) {
       
       ids0 <- length(unique(result[, coluna.alvo]))
       
-      patt1 <- paste0("^", linhas, "\\|", collapse="|")
-      patt2 <- paste0("\\|", linhas, "\\|", collapse="|")
-      patt3 <- paste0("\\|", linhas, "$", collapse="|")
+      linhas.split <- strsplit(unique(result[, coluna.alvo]),
+                               "\\|")
+      keep_these <- lapply(linhas.split, 
+                           function (x) any(x %in% linhas))
+      linhas.keep <- unique(result[, coluna.alvo])[unlist(keep_these)]
+
+      result <- result[result[, coluna.alvo] %in% linhas.keep,]
       
-      keep_these <- 
-        result[, coluna.alvo] %in% linhas |
-        grepl(patt1, result[, coluna.alvo], perl = TRUE) |
-        grepl(patt2, result[, coluna.alvo], perl = TRUE) |
-        grepl(patt3, result[, coluna.alvo], perl = TRUE)
-      
-      result <- result[keep_these,]
+      # patt1 <- paste0("^", linhas, "\\|", collapse="|")
+      # patt2 <- paste0("\\|", linhas, "\\|", collapse="|")
+      # patt3 <- paste0("\\|", linhas, "$", collapse="|")
+      # 
+      # keep_these <- 
+      #   result[, coluna.alvo] %in% linhas |
+      #   grepl(patt1, result[, coluna.alvo], perl = TRUE) |
+      #   grepl(patt2, result[, coluna.alvo], perl = TRUE) |
+      #   grepl(patt3, result[, coluna.alvo], perl = TRUE)
+      # 
+      # result <- result[keep_these,]
       
       ids1 <- length(unique(result[, coluna.alvo]))
       nota <- paste0(ids0 - ids1,
@@ -310,6 +319,8 @@ prepAbundances <- function(tree.data = NULL,
   
   notas <- gsub("\\\n", "",notas)
   notas1 <- paste0(">>>NOTE ", 1:length(notas),": ", notas)
+  notas1 = c("GENERAL NOTES ON TREECO ABUNDANCE DATA EDITS",
+             notas1)
   
   results <- list(result1, notas1)
   names(results) <- c("tree_abundances", "editing_notes")
