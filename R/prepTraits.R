@@ -21,7 +21,37 @@
 #'   different taxonomic levels and the notes of the operations applied
 #'   to obtain the new data frame.
 #'
-#' @details To be included
+#' @details To be finished
+#' 
+#' For obtaining the 'Potential Adult Height' (MaxHeight_m) and
+#' 'Maximum stem diameter' (MaxDbh_cm), if an interval is provided for
+#' traits 'H' and 'DBH' (e.g. '10_12') only the higher value is used
+#' for calculations (12 in this case). The 90% quantile of maximum 'H'
+#' and 'DBH' distributions are used to obtain 'MaxHeight_m' and
+#' 'MaxDbh_cm', respectivelly. For all other numerical values, if an
+#' interval is provided (e.g. '0.6_0.7') only the mean of the interval
+#' is used (i.e. 0.65) and the mean of the trait distribution is used.
+#' 
+#' #Explain the means for Leaf, Fruit and Seed Length and Width for simple and compound, with and without intervals or extreme values
+#' 
+#' For petiole or petiolule length, the description "sessile" is
+#' considered to be 0.01 cm and the descriptions 'subsessile','short
+#' petiolilate','sessile or short petiolate','sessile or subsessile'
+#' are considered as 0.1 cm.
+#' 
+#' Missing leaf type ('simple' or 'compound') are inputated for some
+#' genera know to have constant leaf types (e.g. Eugenia, Casearia or
+#' Miconia). Unifoliolate compound leafs are atread as simple leaves.
+
+
+
+
+# See the help of the internal function `.cat2mean_wsg()` to
+# understand how categories of Wood Specific Gravity are converted to
+# numerical values. Similarly, see the help of the internal function `.cat2mean_LT()` and `.cat2mean_EG()` for the
+# details on how categories of Leaf Rigidity and Ecological Groups are converted to
+# ordinal variables.
+#
 #' 
 #' @author Renato A. F. de Lima & Lucie Zinger
 #'
@@ -76,7 +106,7 @@ prepTraits <- function(trait.data = NULL,
                                 trait.data[[trait.status]], perl = TRUE)] <- NA
   
   trait <- trait.data
-  empty <- c("", " ", NA)
+  empty <- c("", " ", NA, "NA", NULL, "NULL")
   
   #### MANAGEMENT OF NUMERICAL TRAITS --------------------------------------
   
@@ -100,7 +130,7 @@ prepTraits <- function(trait.data = NULL,
   # abline(h=10,v=5,lty=2);abline(h=10,v=50,lty=2)
   
   # Wood density
-  coluna <- trait.list["WSG"] 
+  coluna <- trait.list["WSG"]
   trait[[coluna]] <- .cat2mean_wsg(trait[[coluna]])
   trait[[coluna]] <- as.character(trait[[coluna]])
   #obtaining means for intervals
@@ -151,7 +181,7 @@ prepTraits <- function(trait.data = NULL,
         tmp1[replace_these] <- tmp3
       }
 
-      #obtaining avarages for compound leafs without extremes
+      #obtaining averages for compound leafs without extremes
       replace_these <- 
         sapply(tmp1, function(x) length(grep("\\(|\\)", x, perl = TRUE)) == 0) & 
         sapply(tmp1, function(x) length(grep("al|ais", x, perl = TRUE)) > 0)
@@ -187,11 +217,12 @@ prepTraits <- function(trait.data = NULL,
   #trait[is.na(trait$LeafArea)&!is.na(trait$MinLeafWidth_cm),]
   #trait[is.na(trait$LeafArea)&!is.na(trait$MinLeafLength_cm),]
   trait[[coluna]][is.nan(trait[[coluna]])] <- NA
+  trait[[coluna]][trait[[coluna]] %in% empty] <- NA
   
   # Getting the variance of Leaf Area (i.e. plasticity)
-  tmp = pi * (trait[[cols[1]]])/2 * (trait[[cols[2]]])/2
-  tmp1 = pi * (trait[[cols[3]]])/2 * (trait[[cols[4]]])/2
-  trait$LeafAreaVar = (tmp1 - tmp)/trait[[coluna]]
+  tmp <- pi * (trait[[cols[1]]])/2 * (trait[[cols[2]]])/2
+  tmp1 <- pi * (trait[[cols[3]]])/2 * (trait[[cols[4]]])/2
+  trait$LeafAreaVar <- (tmp1 - tmp)/as.numeric(trait[[coluna]])
   trait$LeafAreaVar[trait$LeafAreaVar %in% 0] <- NA
   trait$LeafAreaVar[!is.na(trait$LeafAreaVar) & 
                       as.double(trait$LeafAreaVar) < 0] <- 
@@ -199,7 +230,7 @@ prepTraits <- function(trait.data = NULL,
                             as.double(trait$LeafAreaVar) < 0]) 
   
   
-  #### CONTINUAR PADRONIZAÇÃO/GENERALIZAÇÃO DAQUI ####
+  #### CONTINUAR PADRONIZAÇÃO/GENERALIZAÇÃO PARA OS DEMAIS ATRIBUTOS DAQUI ####
   
   #Petiole or Petiolule for compound leaves
   trait$petiole_cm[trait$petiole_cm %in% ""] <- NA
@@ -210,9 +241,11 @@ prepTraits <- function(trait.data = NULL,
   tmp[!is.na(trait$petiolule_cm)] <- trait$petiolule_cm[!is.na(trait$petiolule_cm)]
   tmp[!is.na(tmp) & tmp == "sessile"] <- 0.01
   tmp[!is.na(tmp)&tmp %in% 
-        c("subsessile","short petiolilate","sessile or <0.2","sessile or subsessile_less than 0.2")] <- 0.1
+        c("subsessile","short petiolilate","sessile or <0.2",
+          "sessile or subsessile_less than 0.2")] <- 0.1
   tmp[!is.na(tmp)&tmp %in% 
-        c("sessile or short petiolate","sessile or short petiolilate","sessile or subsessile")] <- 0.1
+        c("sessile or short petiolate","sessile or short petiolilate",
+          "sessile or subsessile")] <- 0.1
   tmp <- .squish(tmp)
   min.pt <- mean.pt <- max.pt <- tmp 
   
@@ -623,7 +656,7 @@ prepTraits <- function(trait.data = NULL,
   tmp[tmp %in% "branco"] <- "white"
   trait$latex[trait$latex %in% "abundant white or cream-colored latex"] <- 
     "white or cream (abundant)"
-      
+
   #"Bark"
   
   #"LeafSubtype"
@@ -668,20 +701,28 @@ prepTraits <- function(trait.data = NULL,
   # traits2 <- trait[!is.na(trait$family),]
   traits2 <- droplevels(trait)
   
+  # fixing numeric columsn possibly treated/loaded as characters
+  rep_these <- which(grepl("_cm|_sd|_mg|_microm|_kg|mm2|_m$|\\.kg$|Numb|Prop|_g$|N/mm", names(traits2)))
+  if (any(rep_these)) {
+    for(i in rep_these)
+      traits2[[i]] <- as.numeric(traits2[[i]])
+  }
+
   #columns indices that are factors or numerics or stuff to ignore
   factors.idx <- 
     which(sapply(1:ncol(traits2), function(x) is.character(traits2[,x])) == T)
   comeca <- which(names(traits2) == "species.original")
   factors.idx <- factors.idx[which(factors.idx > comeca)]
-  
+
   numerics.idx <- 
     which(sapply(1:ncol(traits2), function(x) is.numeric(traits2[,x])) == T)
   numerics.idx <- numerics.idx[which(numerics.idx > comeca)]
   
   #check if these columns are actually factors
-  colnames(traits2)[factors.idx]
+  (fatores <- colnames(traits2)[factors.idx])
   # if numeric columns detected here, check in the initial table where is the pb 
   # (or as done in the site table above)
+  
   
   ##Creating the dictionary of mean traits at each taxonomic level
   #creating a list to receive mean trait tables
@@ -691,7 +732,7 @@ prepTraits <- function(trait.data = NULL,
   
   #obtanig mean traits for each taxonomic level
   for (x in taxrank) {
-    print(x)
+    print(paste0("Agregando os dados ao nível de: ", x))
     if(x == "infra_species") {
       tmp = traits2[which(traits2$taxon.rank_merge == x), , drop = F]
       agg = tmp$Name_submitted
@@ -732,7 +773,8 @@ prepTraits <- function(trait.data = NULL,
     DT <- data.table::as.data.table(DF)
     data.table::setnames(DT, x, "TAX")
     data.table::setkeyv(DT, "TAX")
-    cols.to.mean <- colnames(tmp)[numerics.idx]
+    cols.to.mean <- colnames(DT)[-1]
+    # cols.to.mean <- colnames(tmp)[numerics.idx]
     cols.to.mean <- cols.to.mean[!cols.to.mean %in% c("MaxHeight_m","MaxDbh_cm")]
     DT.mean <- DT[ , lapply(.SD, mean, na.rm = T), by = c("TAX"),
                               .SDcols = cols.to.mean]
@@ -797,7 +839,10 @@ prepTraits <- function(trait.data = NULL,
   
   #assigning mean trait values by taxon rank
   #### CHECK HERE: ty to make this step faster ####
-  cat("lowest")
+  #### CHECAR PORQUE OS DADOS DE ATRIBUTOS ESTÃO SAINDO REPETIDOS EM  traits.final ####
+  # cat("lowest")
+  print("Organizando os dados na melhor resolução possível para cada atributo")
+  
   traits.final = do.call("rbind.data.frame", 
                          lapply(1:nrow(tmp.final), function(x) {
     tmp = trait.agg[[tmp.final$taxon.rank_merge[x]]]
@@ -807,6 +852,7 @@ prepTraits <- function(trait.data = NULL,
       return(out)
     }
   }))
+  
   
   ##Saving the results
   # write.csv(traits.final,"traits.lowest.csv")

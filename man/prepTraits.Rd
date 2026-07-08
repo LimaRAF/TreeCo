@@ -51,7 +51,27 @@ Clean trait records, get derived information and average the
 species trait information at family, genus, species and infraspecific levels.
 }
 \details{
-To be included
+To be finished
+
+For obtaining the 'Potential Adult Height' (MaxHeight_m) and
+'Maximum stem diameter' (MaxDbh_cm), if an interval is provided for
+traits 'H' and 'DBH' (e.g. '10_12') only the higher value is used
+for calculations (12 in this case). The 90% quantile of maximum 'H'
+and 'DBH' distributions are used to obtain 'MaxHeight_m' and
+'MaxDbh_cm', respectivelly. For all other numerical values, if an
+interval is provided (e.g. '0.6_0.7') only the mean of the interval
+is used (i.e. 0.65) and the mean of the trait distribution is used.
+
+#Explain the means for Leaf, Fruit and Seed Length and Width for simple and compound, with and without intervals or extreme values
+
+For petiole or petiolule length, the description "sessile" is
+considered to be 0.01 cm and the descriptions 'subsessile','short
+petiolilate','sessile or short petiolate','sessile or subsessile'
+are considered as 0.1 cm.
+
+Missing leaf type ('simple' or 'compound') are inputated for some
+genera know to have constant leaf types (e.g. Eugenia, Casearia or
+Miconia). Unifoliolate compound leafs are atread as simple leaves.
 }
 \author{
 Renato A. F. de Lima & Lucie Zinger

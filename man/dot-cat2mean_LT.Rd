@@ -13,18 +13,22 @@
 the character `x` with the values for the categories
 }
 \description{
-Convert leaf rigidity categories into an ordinal variable 
+Aiming to obtian ordinal variables from leaf rigidity
+  categories, categories are converted to numbers as follows:
+  - membranaceous: 1
+  - submembranaceous: 1.35
+  - subpapyraceous: 1.7
+  - papyraceous: 2
+  - pergamentaceous: 2.35
+  - subchartaceous: 2.7
+  - chartaceous: 3
+  - rigid chartaceous: 3.35
+  - subcoriaceous: 3.7
+  - coriaceous: 4
+  - rigid coriaceous: 4.35
   
-  -  membranaceous = "1"
-  -  submembranaceous =  "1.35"
-  -  subpapyraceous = "1.7"
-  -  papyraceous =  "2" # lembra papiro
-  -  pergamentaceous = "2.35"  # consistencia de pergaminho
-  -  subchartaceous = "2.7"
-  -  chartaceous = "3" #consistência de cartolina
-  -  rigid chartaceous = "3.35"
-  -  subcoriaceous = "3.7"
-  -  "coriaceous" = "4" # lembra couro
-  -  rigid coriaceous = "4.35"
+ Variations of these general categories are dealed internally to
+ maximize the convertion of categories into numbers. For instance,
+ categories 'crassa' or 'leathery' are treated as being 'coriaceous'.
 }
 \keyword{internal}

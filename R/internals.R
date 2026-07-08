@@ -1,8 +1,8 @@
 #' 
 #' @title Extract Maximum Values From Intervals
 #' 
-#' @description Get maximum values stored in parentheses or separated by a
-#'   underline
+#' @description Get maximum values stored in parentheses or separated
+#'   by a underline
 #' 
 #' @param x a character or vector
 #'
@@ -27,16 +27,17 @@
 #' 
 #' @title Convert Categorical Wood Density to Means
 #' 
-#' @description The Forest Products Laboratory (1955) classifies wood in
-#'   respect to their basic density as: light (0,30-0,36g/cm³), moderately heavy
-#'   (0,42-0,50 g/cm³), heavy (0,50-0,60g/cm³) and vey heavy (0,60-0,72 g/cm³).
+#' @description The Forest Products Laboratory (1955) classifies wood
+#'   in respect to their basic density as: light (0,30-0,36g/cm³),
+#'   moderately heavy (0,42-0,50 g/cm³), heavy (0,50-0,60g/cm³) and
+#'   vey heavy (0,60-0,72 g/cm³).
 #'   
-#'   Wong (2002) and Bruzos (2009) classify wood density as light (<0.5 g/cm3),
-#'   moderately heavy (0.5-0.8 g/cm3), heavy (between 0.8-1.0 g/cm3) and very
-#'   heavy (>1.0 g/cm3).
+#'   Wong (2002) and Bruzos (2009) classify wood density as light
+#'   (<0.5 g/cm3), moderately heavy (0.5-0.8 g/cm3), heavy (between
+#'   0.8-1.0 g/cm3) and very heavy (>1.0 g/cm3).
 #'   
-#'   In TreeCo, these categories of wood density mostly comes from H. Lorenzi's
-#'   books, which were adpated here as follows:
+#'   In TreeCo, these categories of wood density mostly comes from H.
+#'   Lorenzi's books, which were adpated here as follows:
 #'   - muito leve: 0.30 g/cm³
 #'   - leve: 0.45 g/cm³
 #'   - moderadamente pesada: 0.65 g/cm³
@@ -52,13 +53,13 @@
 #' 
 #' @references 
 #' 
-#' Bruzos, T. (2009) Propiedades físicas de la madera. Maderas: Ciencia y
-#' tecnología. Universidad del Bio, Chile. 11(1):3-18.
+#' Bruzos, T. (2009) Propiedades físicas de la madera. Maderas:
+#' Ciencia y tecnología. Universidad del Bio, Chile. 11(1):3-18.
 #' 
-#' Wong, T. M. (2002). A Dictionary of Malaysian Timbers. Revised by Lim, S. C.
-#' & Chung, R. C. K. Malayan Forest Record; No. 30. Forest Research Institute
-#' Malaysia. Printed in Malaysia by Percetakan Haji Jantan, Kuala Lumpur,
-#' Malaysia. pp.201.
+#' Wong, T. M. (2002). A Dictionary of Malaysian Timbers. Revised by
+#' Lim, S. C. & Chung, R. C. K. Malayan Forest Record; No. 30. Forest
+#' Research Institute Malaysia. Printed in Malaysia by Percetakan Haji
+#' Jantan, Kuala Lumpur, Malaysia. pp.201.
 #'
 #' 
 .cat2mean_wsg <- function (x) {
@@ -136,20 +137,23 @@
 #' 
 #' @title Convert Leaf Rigidity to Ordinal Values
 #' 
-#' @description  Convert leaf rigidity categories into an ordinal variable 
+#' @description  Aiming to obtian ordinal variables from leaf rigidity
+#'   categories, categories are converted to numbers as follows:
+#'   - membranaceous: 1
+#'   - submembranaceous: 1.35
+#'   - subpapyraceous: 1.7
+#'   - papyraceous: 2
+#'   - pergamentaceous: 2.35
+#'   - subchartaceous: 2.7
+#'   - chartaceous: 3
+#'   - rigid chartaceous: 3.35
+#'   - subcoriaceous: 3.7
+#'   - coriaceous: 4
+#'   - rigid coriaceous: 4.35
 #'   
-#'   -  membranaceous = "1"
-#'   -  submembranaceous =  "1.35"
-#'   -  subpapyraceous = "1.7"
-#'   -  papyraceous =  "2" # lembra papiro
-#'   -  pergamentaceous = "2.35"  # consistencia de pergaminho
-#'   -  subchartaceous = "2.7"
-#'   -  chartaceous = "3" #consistência de cartolina
-#'   -  rigid chartaceous = "3.35"
-#'   -  subcoriaceous = "3.7"
-#'   -  "coriaceous" = "4" # lembra couro
-#'   -  rigid coriaceous = "4.35"
-#'   
+#'  Variations of these general categories are dealed internally to
+#'  maximize the convertion of categories into numbers. For instance,
+#'  categories 'crassa' or 'leathery' are treated as being 'coriaceous'.
 #' 
 #' @param x a vector of leaf rigidity categories
 #'
@@ -184,15 +188,31 @@
              "more or less coriaceous (genus)", 
              "usually coriaceous")] <- "4" # lembra couro
   x[x %in% c("rigid coriaceous", "thick coriaceous")] <- "4.35"
+  
+  warn_these <- is.na(suppressWarnings(as.numeric(x)))
+  if (any(warn_these))
+    warning(paste0("The following categories are currently not supported: ", 
+                  paste(unique(x[warn_these]), collapse = ", ")))
 
   return(x)
 }
 #' 
 #' @title Convert Ecological Groups to Ordinal Values
 #' 
-#' @description  Convert ecological groups (e.g. pioneer, early secondary, etc.)
-#' into an ordinal variable 
+#' @description  Aiming to obtain ordinal variables from ecological
+#'   groups (e.g. pioneer, early secondary, etc.) categories are
+#'   converted to numbers as follows:
+#'   - pioneer: 1
+#'   - light_demanding or shade_intolerant: 1.5
+#'   - early_secondary or heliofita_to_mesofita: 2
+#'   - mesofita: 2.5
+#'   - late_secondary or shade_tolerant: 3
+#'   - ciofita or climax: 4
 #'   
+#'  Variations of these general categories are dealed internally to
+#'  maximize the convertion of categories into numbers. For instance,
+#'  categories 'heliofita_to_mesofita' are treated as being
+#'  'early_secondary'.
 #' 
 #' @param x a vector of ecologial groups
 #'
@@ -229,6 +249,12 @@
 
   x[x %in% 
       c("ciofita","climax")] <- 4
+  
+  warn_these <- is.na(suppressWarnings(as.numeric(x)))
+  if (any(warn_these))
+    warning(paste0("The following categories are currently not supported: ", 
+                   paste(unique(x[warn_these]), collapse = ", ")))
+  
   
   return(x)
 }

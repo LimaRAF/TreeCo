@@ -13,7 +13,19 @@
 the character `x` with the values for the categories
 }
 \description{
-Convert ecological groups (e.g. pioneer, early secondary, etc.)
-into an ordinal variable
+Aiming to obtain ordinal variables from ecological
+  groups (e.g. pioneer, early secondary, etc.) categories are
+  converted to numbers as follows:
+  - pioneer: 1
+  - light_demanding or shade_intolerant: 1.5
+  - early_secondary or heliofita_to_mesofita: 2
+  - mesofita: 2.5
+  - late_secondary or shade_tolerant: 3
+  - ciofita or climax: 4
+  
+ Variations of these general categories are dealed internally to
+ maximize the convertion of categories into numbers. For instance,
+ categories 'heliofita_to_mesofita' are treated as being
+ 'early_secondary'.
 }
 \keyword{internal}
